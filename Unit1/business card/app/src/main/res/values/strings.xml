@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Business Card</string>
+    <string name="full_name">Nguyen Van Truong</string>
+    <string name="university">University of Engineering and Technology (VNU-UET)</string>
+    <string name="email_address">nguyentruonghk17@gmail.com</string>
+</resources>

@@ -63,13 +63,12 @@ fun LemonadeApp() {
     var squeezeCount by remember { mutableStateOf(0) }
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(title = {
-                val title = @androidx.compose.runtime.Composable {
+            CenterAlignedTopAppBar(
+                title = {
                     Text(
                         text = "Lemonade",
                         fontWeight = FontWeight.Bold
                     )
-                }
             },
                 colors = TopAppBarDefaults.largeTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer
@@ -83,76 +82,48 @@ fun LemonadeApp() {
         ) {
             when(currentStep) {
                 1 -> {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.lemon_tree),
-                            contentDescription = stringResource(R.string.lemon_tree_description),
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .clickable { currentStep = 2 }
-                        )
-                        Spacer(modifier = Modifier.height(32.dp))
-                        Text(text = stringResource(R.string.lemon_select)
-                        )
-                    }
+                    LemonTextAndImage(
+                        textLabelResourceId = R.string.lemon_tree_description,
+                        drawbleResourceId = R.drawable.lemon_tree,
+                        contentDescriptionResourceId = R.string.lemon_select,
+                        onImageClick = {
+                            currentStep = 2
+                            squeezeCount = (2..4).random()
+                        }
+                    )
                 }
                 2 -> {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.lemon_squeeze),
-                            contentDescription = stringResource(R.string.lemon_description),
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .clickable { currentStep = 3 }
-                        )
-                        Spacer(modifier = Modifier.height(32.dp))
-                        Text(text = stringResource(R.string.lemon_squeeze)
-                        )
-                    }
+                    LemonTextAndImage(
+                        textLabelResourceId = R.string.lemonade_description,
+                        drawbleResourceId = R.drawable.lemon_squeeze,
+                        contentDescriptionResourceId = R.string.lemon_squeeze,
+                        onImageClick = {
+                            squeezeCount--
+                            if (squeezeCount == 0) {
+                                currentStep = 3
+                            }
+                        }
+                    )
                 }
                 3 -> {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.lemon_drink),
-                            contentDescription = stringResource(R.string.lemonade_description),
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .clickable { currentStep = 4 }
-                        )
-                        Spacer(modifier = Modifier.height(32.dp))
-                        Text(text = stringResource(R.string.lemon_drink)
-                        )
-                    }
+                    LemonTextAndImage(
+                        textLabelResourceId = R.string.lemonade_description,
+                        drawbleResourceId = R.drawable.lemon_drink,
+                        contentDescriptionResourceId = R.string.lemon_drink,
+                        onImageClick = {
+                            currentStep = 4
+                        }
+                    )
                 }
                 4 -> {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.lemon_restart),
-                            contentDescription = stringResource(R.string.empty_glass_description),
-                            modifier = Modifier
-                                .wrapContentSize()
-                                .clickable { currentStep = 1 }
-                        )
-                        Spacer(modifier = Modifier.height(32.dp))
-                        Text(text = stringResource(R.string.lemon_empty_glass)
-                        )
-                    }
+                    LemonTextAndImage(
+                        textLabelResourceId = R.string.empty_glass_description,
+                        drawbleResourceId = R.drawable.lemon_restart,
+                        contentDescriptionResourceId = R.string.lemon_empty_glass,
+                        onImageClick = {
+                            currentStep = 1
+                        }
+                    )
                 }
             }
         }

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ArtSpace</string>
+    <string name="title_artwork">Portrait</string>
+    <string name="title_artwork2">Spaceman Guitar</string>
+    <string name="description_artwork2">astronaut play guitar</string>
+    <string name="description_artwork">Nguyen Van Truong</string>
+</resources>

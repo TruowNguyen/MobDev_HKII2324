@@ -158,7 +158,7 @@ fun TopAppBar(currentPage: String, navHostController: NavHostController) {
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = Color.Black,
-            navigationIconContentColor = Color.Blue
+            navigationIconContentColor = Color.Black
         ),
         navigationIcon = {
             if (currentPage != stringResource(NavigationItem.Home.title)) {

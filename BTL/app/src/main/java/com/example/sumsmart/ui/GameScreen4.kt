@@ -1,5 +1,6 @@
 package com.example.sumsmart.ui
 
+import GameScreen4ViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,6 +41,7 @@ fun GameScreen4(
     val selectedNumbers by gameScreen4ViewModel.selectedNumbers.collectAsState()
     val resultMessage by gameScreen4ViewModel.resultMessage.collectAsState()
     val score by gameScreen4ViewModel.score.collectAsState()
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -86,9 +88,10 @@ fun GameScreen4(
             Column(
                 modifier = Modifier
                     .padding(16.dp),
-                verticalArrangement = Arrangement.Top,
+                verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Spacer(modifier = Modifier.height(32.dp))
 
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(6),
@@ -125,11 +128,9 @@ fun GameScreen4(
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = if (it.startsWith("Đúng rồi")) Color.Green else Color.Red,
-                        modifier = Modifier.padding(top = 16.dp)
+                        modifier = Modifier
                     )
                 }
-
-                Spacer(modifier = Modifier.height(20.dp))
 
                 Button(onClick = { gameScreen4ViewModel.resetGame() }) {
                     Text(text = "Chơi lại")

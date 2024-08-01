@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -25,6 +26,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -84,6 +86,7 @@ fun MainScreen(navController: NavHostController) {
             // Background image
             Image(
                 painter = painterResource(R.drawable.background_3),
+                contentScale = ContentScale.Crop,
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxSize()
@@ -117,7 +120,7 @@ fun MainScreen(navController: NavHostController) {
                     },
                     shape = RoundedCornerShape(50),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
+                        containerColor = MaterialTheme.colorScheme.error
                     )
                 ) {
                     Text(text = "Thoát", color = Color.White, fontWeight = FontWeight.Bold)
@@ -133,7 +136,7 @@ fun GameOption(navController: NavHostController, gameTitle: String, route: Strin
         modifier = Modifier
             .padding(8.dp)
             .clickable { navController.navigate(route) },
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(16.dp),
     ) {
         Box(
             modifier = Modifier.fillMaxWidth().padding(16.dp),
@@ -142,7 +145,7 @@ fun GameOption(navController: NavHostController, gameTitle: String, route: Strin
             Text(
                 text = gameTitle,
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.primary,
+                color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.align(Alignment.Center)
             )
         }

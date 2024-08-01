@@ -1,12 +1,14 @@
-package com.example.sumsmart.ui
-
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.sumsmart.data.NumberData
 import com.example.sumsmart.data.NumberProvider
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlin.random.Random
+import java.util.ArrayDeque
 
 class GameScreen4ViewModel : ViewModel() {
     private val _numbersGrid = MutableStateFlow(generateRandomNumbersGrid())
@@ -33,15 +35,18 @@ class GameScreen4ViewModel : ViewModel() {
             }
         }
 
-        checkSum()
+        viewModelScope.launch {
+            checkSum()
+        }
     }
 
     private fun checkSum() {
         if (_selectedNumbers.value.size == 2) {
             val sum = _selectedNumbers.value.sumOf { _numbersGrid.value[it].value }
-            if (sum == _targetSum.value && canConnect(_selectedNumbers.value[0], _selectedNumbers.value[1])) {
+            val canConnect = with(Dispatchers.Default) { canConnect(_selectedNumbers.value[0], _selectedNumbers.value[1]) }
+            if (sum == _targetSum.value && canConnect) {
                 _resultMessage.value = "Đúng rồi! Tổng là $sum"
-                _score.value += 10
+                _score.update { it + 10 }
                 removeNumbers()
                 _selectedNumbers.value = listOf()
                 _targetSum.value = generateTargetSum()
@@ -61,44 +66,62 @@ class GameScreen4ViewModel : ViewModel() {
     }
 
     private fun canConnect(index1: Int, index2: Int): Boolean {
-        val grid = _numbersGrid.value
-        val row1 = index1 / 6
-        val col1 = index1 % 6
-        val row2 = index2 / 6
-        val col2 = index2 % 6
+        val nRows = 6
+        val nCols = 6
+        val grid = _numbersGrid.value.map { it.drawableId != 0 }
+        val start = Pair(index1 / nCols, index1 % nCols)
+        val end = Pair(index2 / nCols, index2 % nCols)
 
-        // Check horizontal path
-        if (row1 == row2) {
-            val start = minOf(col1, col2)
-            val end = maxOf(col1, col2)
-            for (col in start + 1 until end) {
-                if (grid[row1 * 6 + col].drawableId != 0) {
-                    return false
+        // Dùng BFS để tìm đường nối giữa hai ô
+        val directions = listOf(Pair(-1, 0), Pair(0, 1), Pair(1, 0), Pair(0, -1))
+        val queue = ArrayDeque<Pair<Int, Int>>()
+        val trace = Array(nRows) { Array(nCols) { Pair(-1, -1) } }
+
+        queue.add(start)
+        trace[start.first][start.second] = Pair(-2, -2)
+
+        while (queue.isNotEmpty()) {
+            val current = queue.removeFirst()
+
+            if (current == end) break
+
+            for (dir in directions) {
+                var x = current.first + dir.first
+                var y = current.second + dir.second
+
+                while (x in 0 until nRows && y in 0 until nCols && grid[x * nCols + y]) {
+                    if (trace[x][y].first == -1) {
+                        trace[x][y] = current
+                        queue.add(Pair(x, y))
+                    }
+                    x += dir.first
+                    y += dir.second
                 }
             }
-            return true
         }
 
-        // Check vertical path
-        if (col1 == col2) {
-            val start = minOf(row1, row2)
-            val end = maxOf(row1, row2)
-            for (row in start + 1 until end) {
-                if (grid[row * 6 + col1].drawableId != 0) {
-                    return false
-                }
-            }
-            return true
+        // Duyệt ngược lại từ điểm kết thúc để kiểm tra đường đi
+        var pathValid = false
+        var steps = 0
+        var point = end
+
+        while (trace[point.first][point.second] != Pair(-2, -2)) {
+            steps++
+            point = trace[point.first][point.second]
         }
 
-        // Path not valid
-        return false
+        if (point == start && steps <= 4) {
+            pathValid = true
+        }
+
+        return pathValid
     }
 
     fun resetGame() {
         _numbersGrid.value = generateRandomNumbersGrid()
         _selectedNumbers.value = listOf()
         _resultMessage.value = null
+        _score.value = 0
     }
 
     private fun generateRandomNumbersGrid(): List<NumberData> {

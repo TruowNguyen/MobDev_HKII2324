@@ -62,7 +62,6 @@ fun GameScreen2(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(MaterialTheme.colorScheme.background)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.background_2),
@@ -71,6 +70,7 @@ fun GameScreen2(
                 modifier = Modifier
                     .fillMaxSize()
                     .align(Alignment.Center)
+                    .background(Color.Transparent)
             )
             Column(
                 modifier = Modifier

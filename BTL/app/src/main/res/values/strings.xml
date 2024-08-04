@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">SumSmart</string>
-    <string name="home_title">Tập Tính Cho Bé</string>
-    <string name="game1_title">Tổng Kỳ Diệu</string>
+    <string name="home_title">Tập Tính</string>
+    <string name="game1_title">Tập Tính Cho Bé</string>
     <string name="game2_title">Chạy Đua Số</string>
     <string name="game3_title">Điền Số Phép Cộng</string>
     <string name="game4_title">Nối Số Thần Kỳ</string>
     <string name="game5_title">Thử tài đoán tổng</string>
+    <string name="game6_title">Tổng Kỳ Diệu</string>
     <string name="back_button">Quay lại</string>
     <string name="player_1">Người chơi 1</string>
     <string name="player_2">Người chơi 2</string>

@@ -108,12 +108,15 @@ fun MainScreen(navController: NavHostController) {
                     color = Color.Black,
                     modifier = Modifier.padding(bottom = 16.dp)
                 )
-                GameOption(navController, stringResource(id = R.string.game1_title), "game1")
+                GameOption(navController, stringResource(id = R.string.game6_title), "game6")
                 GameOption(navController, stringResource(id = R.string.game2_title), "game2")
                 GameOption(navController, stringResource(id = R.string.game3_title), "game3")
                 GameOption(navController, stringResource(id = R.string.game4_title), "game4")
                 GameOption(navController, stringResource(id = R.string.game5_title), "game5" )
+                GameOption(navController, stringResource(id = R.string.game1_title), "game1")
+
                 Spacer(modifier = Modifier.height(20.dp))
+
                 Button(
                     onClick = {
                         activity?.finish()

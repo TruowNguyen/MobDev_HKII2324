@@ -130,6 +130,11 @@ fun GameScreen2(
                         color = if (it.startsWith("Đúng rồi")) Color.Green else Color.Red,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
+                    LaunchedEffect(it) {
+                        kotlinx.coroutines.delay(1000)
+                        gameScreen2ViewModel.clearMessage()
+
+                    }
                 }
 
                 Text(
@@ -194,7 +199,7 @@ fun NumberCard2(
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
-        elevation = CardDefaults.cardElevation(1.dp)
+        elevation = CardDefaults.cardElevation(0.dp)
     ) {
         Box(
             contentAlignment = Alignment.Center,
@@ -204,7 +209,7 @@ fun NumberCard2(
                 painter = painterResource(id = number),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(64.dp)
+                    .size(58.dp)
                     .align(Alignment.Center)
             )
         }
@@ -245,3 +250,4 @@ fun GameScreen2Preview() {
     val navController = rememberNavController()
     GameScreen2(navController = navController)
 }
+

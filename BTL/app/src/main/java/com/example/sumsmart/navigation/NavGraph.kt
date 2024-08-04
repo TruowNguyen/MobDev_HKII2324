@@ -8,6 +8,7 @@ import com.example.sumsmart.ui.GameScreen1
 import com.example.sumsmart.ui.GameScreen2
 import com.example.sumsmart.ui.GameScreen3
 import com.example.sumsmart.ui.GameScreen4
+import com.example.sumsmart.ui.GameScreen5
 import com.example.sumsmart.ui.MainScreen
 
 sealed class NavGraphItem(val route: String, val titleRes: Int) {
@@ -16,6 +17,7 @@ sealed class NavGraphItem(val route: String, val titleRes: Int) {
     object Game2 : NavGraphItem("game2", com.example.sumsmart.R.string.game2_title)
     object Game3 : NavGraphItem("game3", com.example.sumsmart.R.string.game3_title)
     object Game4 : NavGraphItem("game4", com.example.sumsmart.R.string.game4_title)
+    object Game5 : NavGraphItem("game5", com.example.sumsmart.R.string.game5_title)
 }
 
 @Composable
@@ -26,5 +28,6 @@ fun NavGraph(navController: NavHostController) {
         composable(NavGraphItem.Game2.route) { GameScreen2(navController = navController) }
         composable(NavGraphItem.Game3.route) { GameScreen3(navController = navController)  }
         composable(NavGraphItem.Game4.route) { GameScreen4(navController = navController) }
+        composable(NavGraphItem.Game5.route) { GameScreen5(navController = navController) }
     }
 }

@@ -112,7 +112,7 @@ fun MainScreen(navController: NavHostController) {
                 GameOption(navController, stringResource(id = R.string.game2_title), "game2")
                 GameOption(navController, stringResource(id = R.string.game3_title), "game3")
                 GameOption(navController, stringResource(id = R.string.game4_title), "game4")
-
+                GameOption(navController, stringResource(id = R.string.game5_title), "game5" )
                 Spacer(modifier = Modifier.height(20.dp))
                 Button(
                     onClick = {
@@ -139,7 +139,9 @@ fun GameOption(navController: NavHostController, gameTitle: String, route: Strin
         shape = RoundedCornerShape(16.dp),
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(

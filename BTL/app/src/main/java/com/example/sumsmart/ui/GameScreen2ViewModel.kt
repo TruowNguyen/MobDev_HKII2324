@@ -2,9 +2,12 @@ package com.example.sumsmart.ui
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import com.example.sumsmart.data.NumberProvider
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 class GameScreen2ViewModel : ViewModel() {
@@ -80,7 +83,7 @@ class GameScreen2ViewModel : ViewModel() {
         }
     }
 
-    fun resetSelection() {
+    private fun resetSelection() {
         _selectedNumberTop.value = emptyList()
         _selectedNumberBottom.value = emptyList()
         _selectedNumbersBottomDisplay.value = emptyList()
@@ -101,11 +104,23 @@ class GameScreen2ViewModel : ViewModel() {
         if (totalSum == targetSum) {
             _resultMessage.value = "Đúng rồi! Tổng là $targetSum."
             _score.value += 10
+            clearMessageAfterDelay()
             setRandomTargetSum()
             generateNumbers() // Tạo số mới sau khi trả lời đúng
         } else {
             _resultMessage.value = "Sai rồi! Vui lòng thử lại."
+            clearMessageAfterDelay()
         }
         resetSelection()
+    }
+    private fun clearMessageAfterDelay() {
+        viewModelScope.launch {
+            delay(1000)
+            _resultMessage.value = null
+        }
+    }
+
+    fun clearMessage() {
+        _resultMessage.value = null
     }
 }
